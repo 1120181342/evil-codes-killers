@@ -150,5 +150,19 @@ function setOptions(chosen) {
     if (chosen == "cnn") {
         selbox.options[selbox.options.length] = new Option('CNN', 'run');
     }
+    if (chosen == "data_preprocess"){
+	selbox.options[selbox.options.length] = new Option('Bin_to_Img','bin_to_img');
+	selbox.options[selbox.options.length] = new Option('Extract_pe_Features','extract_pe_features');
+	selbox.options[selbox.options.length] = new Option('Extract_Opcodes','extract_opcodes');
+	selbox.options[selbox.options.length] = new Option('Count_Samples','count_samples');
+	selbox.options[selbox.options.length] = new Option('Split_Opcodes','split_opcodes');
+	selbox.options[selbox.options.length] = new Option('Latex_Format','latex_format');
+    }
+    if (chosen == "detect_malware"){
+	selbox.options[selbox.options.length] = new Option('Deep_Feedforward','deep_feedforward');
+	selbox.options[selbox.options.length] = new Option('Deep_Rnn','deep_rnn');
+	selbox.options[selbox.options.length] = new Option('Shallow_Ml','shallow_ml');
+	selbox.options[selbox.options.length] = new Option('Transfer_Conv_Ml','transfer_conv_ml');
+    }
 
 }
