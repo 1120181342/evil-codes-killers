@@ -7,9 +7,11 @@ import torchvision
 from torch.autograd import Variable
 from PIL import Image 
 from viper.core.database import Database
+import numpy as np
+import os
 
 class CNNMalware_Model1(nn.Module):
-    def __init__(self, image_dim=256, num_of_classes=4):
+    def __init__(self, image_dim=256, num_of_classes=7):
         super().__init__()
 
         self.image_dim = image_dim
@@ -55,8 +57,11 @@ class CNN(Module):
         if not __sessions__.is_set():
             self.log('info', 'No Sessions')
             return
-        model_path = "/home/cyz/test/CNNMalware_Model1.pt"
+        current_dir = os.path.dirname(os.path.abspath(__file__))#获取绝对路径
+        model_path =current_dir+ "/cnn_canshu/CNNMalware_Model1.pt"#选择参数模型的地址
+	# model_path = "../cnn_canshu/CNNMalware_Model1.pt"
         dataset_path = __sessions__.current.file.path
+        
         model = CNNMalware_Model1()
         model.load_state_dict(torch.load(model_path))
         # print(model)
@@ -65,8 +70,20 @@ class CNN(Module):
                 torchvision.transforms.Resize((256,256)),
                 torchvision.transforms.ToTensor()
             ])
-        dataset = Image.open(dataset_path)
-        data = transform(dataset)
+        
+
+        file = open(dataset_path,'rb')
+        imageNumber = np.fromfile(file,dtype=np.ubyte)
+        filesize = imageNumber.size
+        width = 256#设置图片宽度为256
+        rem = filesize%width
+        # print(rem)
+        if rem != 0:
+            imageNumber = imageNumber[:-rem]
+        height = int(imageNumber.shape[0]/width)
+        grayimage = imageNumber.reshape(height,width)
+        img = Image.fromarray(grayimage)
+        data = transform(img)
         model.eval()
         # tmp = dataset.imgs
         # print(dataset[0][0])
@@ -80,7 +97,7 @@ class CNN(Module):
         # print("\n")
         predicted = torch.max(pred.data, 1)[1]
         anc = str(predicted[0].item())
-        dict = {'0':'APT_28', '1':'APT_29', '2':'Dark_Hotel'}
+        dict = {'0':'Backdoor.Win33.MiniDuke.h', '1':'HEURTrojan.Win32.CozyDuke.gen', '2':'HEURTrojan.Win32.Generic','3':'HEURTrojan.Win32.Sofacy.gen','4':'Trojan.Win32.CloudLook.a','5':'Trojan.Win32.Havex.p','6':'Virus.Win32.Pioneer.dx'}
         self.log('info', dict[anc])
         self.log('info',__sessions__.current.file.sha256)
         db = Database()
