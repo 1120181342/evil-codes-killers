@@ -2,7 +2,7 @@ import random
 from torch.utils.data import DataLoader
 import torchvision
 import torchtext
-from config import *
+from viper.config.config import *
 import numpy as np
 
 
@@ -84,18 +84,38 @@ def get_image_data_loaders(data_path=None, image_dim=64, train_split=0.8, batch_
     dataset = torchvision.datasets.ImageFolder(data_path, transform=transform)
     dataset_len = len(dataset)
     # dataset_len = 1000
-    indices = list(range(dataset_len))
+    #进行初始化测试集基准，确保每个标签可以被检测一次
+    dataset_index = 0
+    init_test_index=[]
+    for i in range(len(dataset.classes)):
+        while(1):
+            if dataset.imgs[dataset_index][1] == i:
+                init_test_index.append(dataset_index)
+                break
+            else:
+                dataset_index+=1
 
+    indices = list(range(dataset_len))
     random.shuffle(indices)
     split = int(np.floor(train_split * dataset_len))
-
+    
+    train_list = indices[:split]
+    test_list = indices[split:dataset_len]
+#确保测试集包含每一个标签
+    for i in init_test_index:
+        if i not in test_list:
+            test_list.append(i)
+    print("------")
+    print(init_test_index)
+    print(test_list)
+    print("------")
     train_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size,
-                                               sampler=torch.utils.data.sampler.SubsetRandomSampler(indices[:split]),
+                                               sampler=torch.utils.data.sampler.SubsetRandomSampler(train_list),
                                                num_workers=0)
 
     val_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size,
                                              sampler=torch.utils.data.sampler.SubsetRandomSampler(
-                                                 indices[split:dataset_len]),
+                                                 test_list),
                                              num_workers=0)
 
     train_set_len = len(train_loader) * batch_size

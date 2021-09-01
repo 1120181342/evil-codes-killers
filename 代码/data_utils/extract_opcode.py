@@ -1,10 +1,10 @@
 from tqdm import tqdm
 import multiprocessing
-from config import *
+from viper.config.config import *
 from subprocess import Popen, PIPE
 import random
 import json
-from data_utils.data_loaders import *
+from viper.data_utils.data_loaders import *
 
 
 def generate_opcode(bin_filename, text_filename, debug=False):

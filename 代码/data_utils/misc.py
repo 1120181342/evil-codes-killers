@@ -1,7 +1,7 @@
 import os
 from tqdm import tqdm
 import pandas as pd
-from utils import *
+from viper.config.utils import *
 import sys
 import traceback
 
