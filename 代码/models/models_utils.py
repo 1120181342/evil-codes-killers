@@ -1,9 +1,9 @@
-from models.CnnModels import *
-from models.AnnModels import *
-from models.RnnModels import *
-from models.TransferLearnModels import *
-from data_utils.data_loaders import *
-from models.model_trainers_testers import *
+from viper.models.CnnModels import *
+from viper.models.AnnModels import *
+from viper.models.RnnModels import *
+from viper.models.TransferLearnModels import *
+from viper.data_utils.data_loaders import *
+from viper.models.model_trainers_testers import *
 from sklearn.model_selection import GridSearchCV
 import xgboost as xgb
 from sklearn.ensemble import RandomForestClassifier
@@ -250,18 +250,18 @@ def get_deep_feedforward_expr_list(print_grid=True, simple_list=True):
 
     if simple_list:
         get_deep_feedforward_expr_list = [
-            {'model_name': 'CNNMalware_Model1', 'batch_size': 256, 'image_dim': 256, 'epochs': 50, 'lr': 0.001,
+            {'model_name': 'CNNMalware_Model1', 'batch_size': 256, 'image_dim': 256, 'epochs': 10, 'lr': 0.001,
              'experiment_name': 'experiment_35', 'feature_type': FEATURE_TYPE_IMAGE},
-            {'model_name': 'CNNMalware_Model1', 'batch_size': 256, 'image_dim': 256, 'epochs': 50, 'lr': 0.0001,
+            {'model_name': 'CNNMalware_Model1', 'batch_size': 64, 'image_dim': 256, 'epochs': 10, 'lr': 0.0001,
              'experiment_name': 'experiment_36', 'feature_type': FEATURE_TYPE_IMAGE},
-            {'model_name': 'CNNMalware_Model1', 'batch_size': 256, 'image_dim': 512, 'epochs': 50, 'lr': 0.001,
-             'experiment_name': 'experiment_37', 'feature_type': FEATURE_TYPE_IMAGE},
-            {'model_name': 'CNNMalware_Model1', 'batch_size': 256, 'image_dim': 512, 'epochs': 50, 'lr': 0.0001,
-             'experiment_name': 'experiment_38', 'feature_type': FEATURE_TYPE_IMAGE},
-            {'model_name': 'CNNMalware_Model1', 'batch_size': 64, 'image_dim': 1024, 'epochs': 20, 'lr': 0.001,
-             'experiment_name': 'experiment_39', 'feature_type': FEATURE_TYPE_IMAGE},
-            {'model_name': 'CNNMalware_Model1', 'batch_size': 64, 'image_dim': 1024, 'epochs': 20, 'lr': 0.0001,
-             'experiment_name': 'experiment_40', 'feature_type': FEATURE_TYPE_IMAGE}
+            # {'model_name': 'CNNMalware_Model1', 'batch_size': 256, 'image_dim': 512, 'epochs': 50, 'lr': 0.001,
+            #  'experiment_name': 'experiment_37', 'feature_type': FEATURE_TYPE_IMAGE},
+            # {'model_name': 'CNNMalware_Model1', 'batch_size': 256, 'image_dim': 512, 'epochs': 50, 'lr': 0.0001,
+            #  'experiment_name': 'experiment_38', 'feature_type': FEATURE_TYPE_IMAGE}
+            # {'model_name': 'CNNMalware_Model1', 'batch_size': 64, 'image_dim': 1024, 'epochs': 20, 'lr': 0.001,
+            #  'experiment_name': 'experiment_39', 'feature_type': FEATURE_TYPE_IMAGE},
+            # {'model_name': 'CNNMalware_Model1', 'batch_size': 64, 'image_dim': 1024, 'epochs': 20, 'lr': 0.0001,
+            #  'experiment_name': 'experiment_40', 'feature_type': FEATURE_TYPE_IMAGE}
         ]
         return get_deep_feedforward_expr_list
     else:

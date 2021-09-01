@@ -4,11 +4,11 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms, models
 from torchvision.utils import make_grid
-from config import *
+from viper.config.config import *
 import numpy as np
-from models.CnnModels import *
-from data_utils.data_loaders import *
-from utils import *
+from viper.models.CnnModels import *
+from viper.data_utils.data_loaders import *
+from viper.config.utils import *
 from tqdm import tqdm
 
 

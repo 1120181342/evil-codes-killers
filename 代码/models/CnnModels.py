@@ -5,7 +5,7 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms, models
 from torchvision.utils import make_grid
-from config import *
+from viper.config.config import *
 import numpy as np
 
 
