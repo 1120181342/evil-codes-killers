@@ -133,7 +133,18 @@ mod_dict = {'apk': {'help': '-h',
                      'all': 'scan -a -t',
                      'rules': 'rules'},
             'mycmd':{'run': ''},
-            'cnn':{'run': ''}
+            'cnn':{'run': ''},
+	    'data_preprocess':{'extract_pe_features':'--extract_pe_features',
+				'bin_to_img':'--bin_to_img',
+				'extract_opcodes':'--extract_opcodes',
+				'count_samples':'--count_samples',
+				'split_opcodes':'--split_opcodes',
+				'latex_format':'--latex_format'},
+	    'detect_malware':{'deep_feedforward':'--deep_feedforward',
+			      'deep_rnn':'--deep_rnn',
+			      'shallow_ml':'--shallow_ml',
+			      'transfer_conv_ml':'--transfer_conv_ml'
+				}
             }
 
 
