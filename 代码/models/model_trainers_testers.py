@@ -24,6 +24,7 @@ def train_ann_model(model=None, model_params=None, criterion=None,
 
     tqdm_train_descr_format = "Training Feed-Forward model: Epoch Accuracy = {:02.4f}%, Loss = {:.8f}"
     tqdm_train_descr = tqdm_train_descr_format.format(0, float('inf'))
+    print("")
     tqdm_train_obj = tqdm(range(epochs), desc=tqdm_train_descr)
 
     model.train(True)

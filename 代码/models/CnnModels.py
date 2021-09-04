@@ -5,51 +5,9 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms, models
 from torchvision.utils import make_grid
-from config import *
+from viper.config.config import *
 import numpy as np
 
-
-# class CNNMalware_Model1(nn.Module):
-#     def __init__(self, image_dim=32, num_of_classes=20):
-#         super().__init__()
-#
-#         self.image_dim = image_dim
-#         self.num_of_classes = num_of_classes
-#
-#         self.conv1_out_channel = 12
-#         self.conv1_kernel_size = 3
-#
-#         self.conv2_out_channel = 16
-#         self.conv2_kernel_size = 3
-#
-#         self.linear1_out_features = 120
-#         self.linear2_out_features = 90
-#         # self.linear3_out_features = 50
-#
-#         self.conv1 = nn.Conv2d(1, self.conv1_out_channel, self.conv1_kernel_size, stride=1,
-#                                padding=(2, 2))
-#
-#         self.conv2 = nn.Conv2d(self.conv1_out_channel, self.conv2_out_channel, self.conv2_kernel_size, stride=1,
-#                                padding=(2, 2))
-#
-#         self.temp = int((((self.image_dim + 2) / 2) + 2) / 2)
-#
-#         self.fc1 = nn.Linear(self.temp * self.temp * self.conv2_out_channel, self.linear1_out_features)
-#         self.fc2 = nn.Linear(self.linear1_out_features, self.linear2_out_features)
-#         # self.fcnew = nn.Linear(self.linear2_out_features, self.linear3_out_features)
-#         self.fc3 = nn.Linear(self.linear2_out_features, self.num_of_classes)
-#
-#     def forward(self, X):
-#         X = F.relu(self.conv1(X))
-#         X = F.max_pool2d(X, 2, 2)
-#         X = F.relu(self.conv2(X))
-#         X = F.max_pool2d(X, 2, 2)
-#         X = X.view(-1, self.temp * self.temp * self.conv2_out_channel)
-#         X = F.relu(self.fc1(X))
-#         X = F.relu(self.fc2(X))
-#         # X = F.relu(self.fcnew(X))
-#         X = self.fc3(X)
-#         return F.log_softmax(X, dim=1)
 
 class CNNMalware_Model1(nn.Module):
     def __init__(self, image_dim=32, num_of_classes=20):
@@ -66,7 +24,6 @@ class CNNMalware_Model1(nn.Module):
 
         self.linear1_out_features = 120
         self.linear2_out_features = 90
-        # self.linear3_out_features = 50
 
         self.conv1 = nn.Conv2d(1, self.conv1_out_channel, self.conv1_kernel_size, stride=1,
                                padding=(2, 2))
@@ -78,20 +35,20 @@ class CNNMalware_Model1(nn.Module):
 
         self.fc1 = nn.Linear(self.temp * self.temp * self.conv2_out_channel, self.linear1_out_features)
         self.fc2 = nn.Linear(self.linear1_out_features, self.linear2_out_features)
-        # self.fcnew = nn.Linear(self.linear2_out_features, self.linear3_out_features)
         self.fc3 = nn.Linear(self.linear2_out_features, self.num_of_classes)
 
     def forward(self, X):
-        X = F.leaky_relu(self.conv1(X),0.01)
+        X = F.relu(self.conv1(X))
         X = F.max_pool2d(X, 2, 2)
-        X = F.leaky_relu(self.conv2(X),0.01)
+        X = F.relu(self.conv2(X))
         X = F.max_pool2d(X, 2, 2)
         X = X.view(-1, self.temp * self.temp * self.conv2_out_channel)
-        X = F.leaky_relu(self.fc1(X),0.01)
-        X = F.leaky_relu(self.fc2(X),0.01)
-        # X = F.relu(self.fcnew(X))
+        X = F.relu(self.fc1(X))
+        X = F.relu(self.fc2(X))
         X = self.fc3(X)
         return F.log_softmax(X, dim=1)
+
+
 class CNNMalware_Model2(nn.Module):
     def __init__(self, image_dim=32, num_of_classes=20):
         super().__init__()
@@ -268,3 +225,46 @@ class CNNMalware_Model5(nn.Module):
         cat = self.dropout(torch.cat(pooled, dim=1))
         cat2 = self.fc(cat)
         return F.log_softmax(cat2, dim=1)
+
+
+class My_CNNMalware_Model1(nn.Module):
+    def __init__(self, image_dim=32, num_of_classes=20):
+        super().__init__()
+
+        self.image_dim = image_dim
+        self.num_of_classes = num_of_classes
+
+        self.conv1_out_channel = 12
+        self.conv1_kernel_size = 3
+
+        self.conv2_out_channel = 16
+        self.conv2_kernel_size = 3
+
+        self.linear1_out_features = 120
+        self.linear2_out_features = 90
+        # self.linear3_out_features = 50
+
+        self.conv1 = nn.Conv2d(1, self.conv1_out_channel, self.conv1_kernel_size, stride=1,
+                               padding=(2, 2))
+
+        self.conv2 = nn.Conv2d(self.conv1_out_channel, self.conv2_out_channel, self.conv2_kernel_size, stride=1,
+                               padding=(2, 2))
+
+        self.temp = int((((self.image_dim + 2) / 2) + 2) / 2)
+
+        self.fc1 = nn.Linear(self.temp * self.temp * self.conv2_out_channel, self.linear1_out_features)
+        self.fc2 = nn.Linear(self.linear1_out_features, self.linear2_out_features)
+        # self.fcnew = nn.Linear(self.linear2_out_features, self.linear3_out_features)
+        self.fc3 = nn.Linear(self.linear2_out_features, self.num_of_classes)
+
+    def forward(self, X):
+        X = F.leaky_relu(self.conv1(X),0.01)
+        X = F.max_pool2d(X, 2, 2)
+        X = F.leaky_relu(self.conv2(X),0.01)
+        X = F.max_pool2d(X, 2, 2)
+        X = X.view(-1, self.temp * self.temp * self.conv2_out_channel)
+        X = F.leaky_relu(self.fc1(X),0.01)
+        X = F.leaky_relu(self.fc2(X),0.01)
+        # X = F.relu(self.fcnew(X))
+        X = self.fc3(X)
+        return F.log_softmax(X, dim=1)

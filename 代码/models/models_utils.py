@@ -1,9 +1,9 @@
-from models.CnnModels import *
-from models.AnnModels import *
-from models.RnnModels import *
-from models.TransferLearnModels import *
-from data_utils.data_loaders import *
-from models.model_trainers_testers import *
+from viper.models.CnnModels import *
+from viper.models.AnnModels import *
+from viper.models.RnnModels import *
+from viper.models.TransferLearnModels import *
+from viper.data_utils.data_loaders import *
+from viper.models.model_trainers_testers import *
 from sklearn.model_selection import GridSearchCV
 import xgboost as xgb
 from sklearn.ensemble import RandomForestClassifier
@@ -132,7 +132,7 @@ def get_deep_rnn_expr_list(print_grid=True, simple_list=True):
         return permutations_dicts
 
 
-def get_deep_feedforward_expr_list(print_grid=True, simple_list=True):
+def get_deep_feedforward_expr_list(train_list=[],print_grid=True, simple_list=True):
     # get_deep_feedforward_expr_list= {
     #         'model_name': 'CNNMalware_Model1',
     #         'experiment_name': 'cnn_experiment_1',
@@ -249,20 +249,24 @@ def get_deep_feedforward_expr_list(print_grid=True, simple_list=True):
         print_line()
 
     if simple_list:
-        get_deep_feedforward_expr_list = [
-            {'model_name': 'CNNMalware_Model1', 'batch_size': 128, 'image_dim': 256, 'epochs': 20, 'lr': 0.001,
-             'experiment_name': 'test6', 'feature_type': FEATURE_TYPE_IMAGE}
-            # {'model_name': 'CNNMalware_Model1', 'batch_size': 256, 'image_dim': 256, 'epochs': 50, 'lr': 0.0001,
-            #  'experiment_name': 'experiment_36', 'feature_type': FEATURE_TYPE_IMAGE},
-            # {'model_name': 'CNNMalware_Model1', 'batch_size': 256, 'image_dim': 512, 'epochs': 50, 'lr': 0.001,
-            #  'experiment_name': 'experiment_37', 'feature_type': FEATURE_TYPE_IMAGE},
-            # {'model_name': 'CNNMalware_Model1', 'batch_size': 256, 'image_dim': 512, 'epochs': 50, 'lr': 0.0001,
-            #  'experiment_name': 'experiment_38', 'feature_type': FEATURE_TYPE_IMAGE}
-            # {'model_name': 'CNNMalware_Model1', 'batch_size': 64, 'image_dim': 1024, 'epochs': 20, 'lr': 0.001,
-            #  'experiment_name': 'experiment_39', 'feature_type': FEATURE_TYPE_IMAGE},
-            # {'model_name': 'CNNMalware_Model1', 'batch_size': 64, 'image_dim': 1024, 'epochs': 20, 'lr': 0.0001,
-            #  'experiment_name': 'experiment_40', 'feature_type': FEATURE_TYPE_IMAGE}
-        ]
+        print("train_list")
+        print(train_list)
+        print("train_list")
+        get_deep_feedforward_expr_list = train_list
+        # [
+        #     {'model_name': 'CNNMalware_Model1', 'batch_size': 256, 'image_dim': 256, 'epochs': 25, 'lr': 0.001,
+        #      'experiment_name': 'experiment_35', 'feature_type': FEATURE_TYPE_IMAGE},
+        #     {'model_name': 'CNNMalware_Model1', 'batch_size': 256, 'image_dim': 256, 'epochs': 25, 'lr': 0.0001,
+        #      'experiment_name': 'experiment_36', 'feature_type': FEATURE_TYPE_IMAGE},
+        #     # {'model_name': 'CNNMalware_Model1', 'batch_size': 256, 'image_dim': 512, 'epochs': 50, 'lr': 0.001,
+        #     #  'experiment_name': 'experiment_37', 'feature_type': FEATURE_TYPE_IMAGE},
+        #     # {'model_name': 'CNNMalware_Model1', 'batch_size': 256, 'image_dim': 512, 'epochs': 50, 'lr': 0.0001,
+        #     #  'experiment_name': 'experiment_38', 'feature_type': FEATURE_TYPE_IMAGE}
+        #     # {'model_name': 'CNNMalware_Model1', 'batch_size': 64, 'image_dim': 1024, 'epochs': 20, 'lr': 0.001,
+        #     #  'experiment_name': 'experiment_39', 'feature_type': FEATURE_TYPE_IMAGE},
+        #     # {'model_name': 'CNNMalware_Model1', 'batch_size': 64, 'image_dim': 1024, 'epochs': 20, 'lr': 0.0001,
+        #     #  'experiment_name': 'experiment_40', 'feature_type': FEATURE_TYPE_IMAGE}
+        # ]
         return get_deep_feedforward_expr_list
     else:
         keys, values = zip(*get_deep_feedforward_expr_grid.items())
@@ -377,14 +381,14 @@ def get_conv_transfer_learning_expr_list():
     return list_tl_expr
 
 
-def get_malware_experiments_list(expr_type):
+def get_malware_experiments_list(expr_type,train_list):
     expr_list = None
     if expr_type == DEEP_FF:
-        expr_list = get_deep_feedforward_expr_list()
+        expr_list = get_deep_feedforward_expr_list(train_list=train_list)
     if expr_type == DEEP_RNN:
-        expr_list = get_deep_rnn_expr_list()
+        expr_list = get_deep_rnn_expr_list(train_list=[])
     if expr_type == SHALLOW_ML:
-        expr_list = get_shallow_expr_list()
+        expr_list = get_shallow_expr_list(train_list=[])
 
     if expr_list is None:
         raise Exception('Unknown experiment type')
@@ -407,6 +411,11 @@ def create_deep_image_model(model_params):
             raise Exception("CNNMalware_Model2 needs image_dim != 0")
         model = CNNMalware_Model2(image_dim=image_dim, num_of_classes=num_of_classes).to(device)
 
+    if model_name == 'My_CNNMalware_Model1':
+        if image_dim == 0:
+            raise Exception("My_CNNMalware_Model1 needs image_dim != 0")
+        model = My_CNNMalware_Model1(image_dim=image_dim, num_of_classes=num_of_classes).to(device)
+
     if model_name == 'CNNMalware_Model3':
         conv1d_image_dim_w = model_params['conv1d_image_dim_w']
         if image_dim != 0:
@@ -416,7 +425,7 @@ def create_deep_image_model(model_params):
     if model_name == 'CNNMalware_Model4':
         if image_dim != 0:
             raise Exception("CNNMalware_Model4 needs image_dim = 0")
-
+    
         conv1d_image_dim_w = model_params['conv1d_image_dim_w']
         c1_out = model_params['c1_out']
         c1_kernel = model_params['c1_kernel']
