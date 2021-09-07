@@ -54,7 +54,7 @@ class Data_preprocess(Module):
             head_dir = json.loads(data.decode('utf-8'))
             filesize_b = head_dir["fileSize"]
             filename = head_dir["fileName"]
-            FILEPATH_tmp = FILEPATH + filename
+            FILEPATH_tmp = FILEPATH +"/"+filename
             self.log('info',"文件路径：" + FILEPATH_tmp)
             # if not os.path.exists(FILEPATH_tmp):
             #     os.makedirs(FILEPATH_tmp)
