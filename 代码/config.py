@@ -2,32 +2,34 @@ import os
 import torch
 import multiprocessing
 
+ROOT_DIR = '/home/wwh/dataset'#存储的根目录(此处需要进行切换)
 # original dataset i.e. binary executable files
-ORG_DATASET_ROOT_PATH = os.path.join('data', 'exec_files')
+ORG_DATASET_ROOT_PATH = os.path.join(ROOT_DIR,'data', 'exec_files')
 ORG_DATASET_DIR_NAME = 'org_dataset'
-ORG_DATASET_PATH = os.path.join('./data', 'exec_files', ORG_DATASET_DIR_NAME)
+FILEPATH=ORG_DATASET_ROOT_PATH
+ORG_DATASET_PATH = os.path.join(ROOT_DIR,'data', 'exec_files', ORG_DATASET_DIR_NAME)
 supported_image_dims = [0, 1, 64, 128, 256, 512, 1024]
 
 # opcodes from binary executables
 # -1: the entire opcode len of the binary, else the specific opcode len
 supported_opcode_lens = [-1, 10, 20, 50, 100, 500, 1000, 2000, 5000]
-ORG_DATASET_OPCODES_PATH = os.path.join('./data', 'exec_files', 'org_dataset_opcodes')
+ORG_DATASET_OPCODES_PATH = os.path.join(ROOT_DIR,'data', 'exec_files', 'org_dataset_opcodes')
 # PE features from binary executables
-ORG_DATASET_PE_FEATURES_CSV = os.path.join('data', 'org_malware_dataset_pe_features.csv')
+ORG_DATASET_PE_FEATURES_CSV = os.path.join(ROOT_DIR,'data', 'org_malware_dataset_pe_features.csv')
 
 # count files for ORG_DATASET_PATH
-ORG_DATASET_COUNT_CSV = os.path.join('data', 'org_malware_dataset_count.csv')
+ORG_DATASET_COUNT_CSV = os.path.join(ROOT_DIR,'data', 'org_malware_dataset_count.csv')
 # count files for ORG_DATASET_PATH_IMAGE*
-ORG_DATASET_COUNT_IMAGES_CSV = os.path.join('data', 'org_malware_dataset_count_images.csv')
+ORG_DATASET_COUNT_IMAGES_CSV = os.path.join(ROOT_DIR,'data', 'org_malware_dataset_count_images.csv')
 # count files for ORG_DATASET_OPCODES_PATH
-ORG_DATASET_COUNT_PE_FEATURES_CSV = os.path.join('data', 'org_malware_dataset_count_pe_features.csv')
+ORG_DATASET_COUNT_PE_FEATURES_CSV = os.path.join(ROOT_DIR,'data', 'org_malware_dataset_count_pe_features.csv')
 # count files for ORG_DATASET_PE_FEATURES_CSV
-ORG_DATASET_COUNT_OPCODES_PATH = os.path.join('data', 'org_malware_dataset_count_opcodes.csv')
+ORG_DATASET_COUNT_OPCODES_PATH = os.path.join(ROOT_DIR,'data', 'org_malware_dataset_count_opcodes.csv')
 
 use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
 LINE_LEN = 80
-LOG_MASTER_DIR = 'logs'
+LOG_MASTER_DIR = ROOT_DIR+'/logs'
 MODEL_INFO_LOG = 'model_info_and_results.log'
 MODEL_META_INFO_LOG = 'models_meta_info.log'
 MODEL_LOSS_INFO_LOG = 'model_losses.log'

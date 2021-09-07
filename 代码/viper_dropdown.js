@@ -151,9 +151,13 @@ function setOptions(chosen) {
         selbox.options[selbox.options.length] = new Option('查看模型的结构', 'models_structure');
 	selbox.options[selbox.options.length] = new Option('使用CNNMalware_Model1模型进行识别', 'CNNMalware_Model1');
 	selbox.options[selbox.options.length] = new Option('使用My_CNNMalware_Model1模型进行识别', 'My_CNNMalware_Model1');
+	selbox.options[selbox.options.length] = new Option('使用My_CNNMalware_lenet5模型进行识别', 'My_CNNMalware_lenet5');
+	selbox.options[selbox.options.length] = new Option('使用自定义的检测方式进行识别', 'Custom_predict');
+	selbox.options[selbox.options.length] = new Option('将该检测结果进行上传', 'upload');
     }
     if (chosen == "data_preprocess"){
 	selbox.options[selbox.options.length] = new Option('恶意代码转换成灰度图','bin_to_img');
+	selbox.options[selbox.options.length] = new Option('从数据库下载数据集','load_datas');
 	selbox.options[selbox.options.length] = new Option('Extract_pe_Features','extract_pe_features');
 	selbox.options[selbox.options.length] = new Option('Extract_Opcodes','extract_opcodes');
 	selbox.options[selbox.options.length] = new Option('Count_Samples','count_samples');
