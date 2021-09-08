@@ -1,0 +1,6 @@
+{
+    "predict_1":{
+        "model_name":"CNNMalware_Model111",
+        "model_params_path":"/home/wwh/dataset/logs/test_1/CNNMalware_Model1.pt"
+    }
+}
