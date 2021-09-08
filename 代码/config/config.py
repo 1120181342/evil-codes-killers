@@ -6,6 +6,7 @@ ROOT_DIR = '/home/wwh/dataset'#存储的根目录(此处需要进行切换)
 # original dataset i.e. binary executable files
 ORG_DATASET_ROOT_PATH = os.path.join(ROOT_DIR,'data', 'exec_files')
 ORG_DATASET_DIR_NAME = 'org_dataset'
+FILEPATH=os.path.join(ORG_DATASET_ROOT_PATH,ORG_DATASET_DIR_NAME)
 ORG_DATASET_PATH = os.path.join(ROOT_DIR,'data', 'exec_files', ORG_DATASET_DIR_NAME)
 supported_image_dims = [0, 1, 64, 128, 256, 512, 1024]
 
