@@ -226,23 +226,28 @@ class CNN(Module):
         with open(json_path,"r") as file:
                 datas_json = file.read()
         datas = json.loads(datas_json)
-        predict_ways = []
-        for data in datas.values():
-            predict_ways.append(data)
-        print(predict_ways)
-        for predict_way in predict_ways:
-            module_name = predict_way['model_name']
-            module_path = predict_way['model_params_path']
-            self.log('info',f'使用的模型名称为{module_name}')
-            self.log('info',f'模型的参数路径在{module_path}')
-            if module_name == 'CNNMalware_Model1':
-                pred = self.use_CNNMalware_Model1(module_path)
-            elif module_name == 'My_CNNMalware_Model1':
-                pred = self.use_My_CNNMalware_Model1(module_path)
-            elif module_name == 'My_CNNMalware_lenet5':
-                pred = self.use_My_CNNMalware_lenet5(module_path)
-            self.log('info',f'该模型的检测结果为{pred}')
-            self.log('info','--------------------------------------------------------\n')               
+        try:
+            predict_ways = []
+            for data in datas.values():
+                predict_ways.append(data)
+            print(predict_ways)
+            for predict_way in predict_ways:
+                module_name = predict_way['model_name']
+                module_path = predict_way['model_params_path']
+                self.log('info',f'使用的模型名称为{module_name}')
+                self.log('info',f'模型的参数路径在{module_path}')
+                if module_name == 'CNNMalware_Model1':
+                    pred = self.use_CNNMalware_Model1(module_path)
+                elif module_name == 'My_CNNMalware_Model1':
+                    pred = self.use_My_CNNMalware_Model1(module_path)
+                elif module_name == 'My_CNNMalware_lenet5':
+                    pred = self.use_My_CNNMalware_lenet5(module_path)
+                else:
+                    self.log('info',f'模型{module_name}不是内置模型，无法进行检测!')
+                self.log('info',f'该模型的检测结果为{pred}')
+                self.log('info','--------------------------------------------------------\n')
+        except:
+            self.log('info',"cnn_params.json存在错误或者模型参数不适合该模型!")               
 
     def print_result(self,pred):
         if pred == "other_malware":

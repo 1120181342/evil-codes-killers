@@ -54,14 +54,14 @@ class Data_preprocess(Module):
             head_dir = json.loads(data.decode('utf-8'))
             filesize_b = head_dir["fileSize"]
             filename = head_dir["fileName"]
-            FILEPATH_tmp = FILEPATH +"/"+filename
+            FILEPATH_tmp = FILEPATH + "/"+filename
             self.log('info',"文件路径：" + FILEPATH_tmp)
             # if not os.path.exists(FILEPATH_tmp):
             #     os.makedirs(FILEPATH_tmp)
             # FILEPATH_tmp += '/'
             recv_len = 0
             recv_mesg = b''
-            f = open("%s%s" % (FILEPATH, filename), "wb")
+            f = open("%s" % (FILEPATH_tmp), "wb")
 
             while recv_len < filesize_b:
                 if filesize_b - recv_len > buffSize:
@@ -80,7 +80,7 @@ class Data_preprocess(Module):
             client.send(bytes(completed, "utf-8"))
             self.log('info',filename+"下载完毕！")
             tmp = filename[:-4]
-            unzip_path = FILEPATH + tmp
+            unzip_path = FILEPATH+ "/" + tmp
             if zipfile.is_zipfile(FILEPATH_tmp):
                 FILE = zipfile.ZipFile(FILEPATH_tmp, 'r')
                 for file in FILE.namelist():
@@ -98,7 +98,7 @@ class Data_preprocess(Module):
         select = "-1"
         client.send(bytes(select, "utf-8"))
         time.sleep(3)
-        self.log('info', '退出系统！')        
+        self.log('info', '退出系统！') 
         client.close()
         # client.connect(ip_port)
         # self.log('info',"ok")
