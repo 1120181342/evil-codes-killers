@@ -1,6 +1,14 @@
 {
     "predict_1":{
-        "model_name":"CNNMalware_Model111",
-        "model_params_path":"/home/wwh/dataset/logs/test_1/CNNMalware_Model1.pt"
+        "model_name":"CNNMalware_Model1",
+        "model_params_path":"/home/wwh/.viper/modules/cnn_canshu/CNNMalware_Model1.pt"
+    },
+    "predict_2":{
+        "model_name":"My_CNNMalware_Model1",
+        "model_params_path":"/home/wwh/.viper/modules/cnn_canshu/My_CNNMalware_Model1.pt"
+    },
+    "predict_3":{
+        "model_name":"My_CNNMalware_lenet5",
+        "model_params_path":"/home/wwh/.viper/modules/cnn_canshu/My_CNNMalware_lenet5.pt"
     }
 }
